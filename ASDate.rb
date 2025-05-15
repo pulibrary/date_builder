@@ -15,7 +15,29 @@ class ASDate < Sequel::Model(:date)
                             date_type_id
                             label_id|
 
-# Rails.logger breaks ASpace
-# Rails.logger.warn('we are in the new date_test!')
+  def around_save
+    # if there are no normalized values, do something
+    if (!self.begin && !self.end) && self.expression
+      self.begin = '1492'
+    #   # parse date
+    #   parsed_dates = Timetwister.parse(self.expression)
 
+    #   # store pre-parse date_type
+    #   # otherwise, any range will annihilate bulk type
+    #   dtype = self.date_type
+
+    #   # store the parsed values for first date if we were able to parse
+    #   populate(self, parsed_dates.first, dtype)
+
+      super
+
+    #   parsed_dates.drop(1).each do |ttdate|
+    #     date = ASDate.new
+    #     populate(date, ttdate, dtype)
+    #     date.save
+    #   end
+    else
+      super
+    end
+  end
 end
