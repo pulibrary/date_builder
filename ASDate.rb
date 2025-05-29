@@ -1,43 +1,50 @@
-class ASDate < Sequel::Model(:date)
-  include ASModel
-  corresponds_to JSONModel(:date)
 
-  set_model_scope :global
+# Rails.application.config.after_initialize do
 
-  # Sequel FKey fields that should just be copied from initial date if present
-  @@association_fields = %w|accession_id
-                            deaccession_id
-                            archival_object_id
-                            resource_id
-                            event_id
-                            digital_object_id
-                            digital_object_component_id
-                            date_type_id
-                            label_id|
+  class ASDate < Sequel::Model(:date)
+    include ASModel
+    corresponds_to JSONModel(:date)
 
-  def around_save
-    # if there are no normalized values, do something
-    if (!self.begin && !self.end) && self.expression
-      self.begin = '1492'
-    #   # parse date
-    #   parsed_dates = Timetwister.parse(self.expression)
+    set_model_scope :global
 
-    #   # store pre-parse date_type
-    #   # otherwise, any range will annihilate bulk type
-    #   dtype = self.date_type
+    # Sequel FKey fields that should just be copied from initial date if present
+    @@association_fields = %w|accession_id
+                              deaccession_id
+                              archival_object_id
+                              resource_id
+                              event_id
+                              digital_object_id
+                              digital_object_component_id
+                              date_type_id
+                              label_id|
 
-    #   # store the parsed values for first date if we were able to parse
-    #   populate(self, parsed_dates.first, dtype)
+    def around_save
+      # if there are no normalized values, do something
+      if (!self.begin && !self.end) && self.expression
+        if self.expression =~ /\d{4}/
+            self.begin = self.expression
+        else self.begin = '1973'
+        end
+      #   # parse date
+      #   parsed_dates = Timetwister.parse(self.expression)
 
-      super
+      #   # store pre-parse date_type
+      #   # otherwise, any range will annihilate bulk type
+      #   dtype = self.date_type
 
-    #   parsed_dates.drop(1).each do |ttdate|
-    #     date = ASDate.new
-    #     populate(date, ttdate, dtype)
-    #     date.save
-    #   end
-    else
-      super
+      #   # store the parsed values for first date if we were able to parse
+      #   populate(self, parsed_dates.first, dtype)
+
+        super
+
+      #   parsed_dates.drop(1).each do |ttdate|
+      #     date = ASDate.new
+      #     populate(date, ttdate, dtype)
+      #     date.save
+      #   end
+      else
+        super
+      end
     end
   end
-end
+# end
