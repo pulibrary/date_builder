@@ -1,3 +1,4 @@
+require 'chronic'
 
 # Rails.application.config.after_initialize do
 

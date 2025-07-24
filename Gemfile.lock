@@ -1,0 +1,14 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    chronic (0.10.2)
+
+PLATFORMS
+  ruby
+  x86_64-darwin-24
+
+DEPENDENCIES
+  chronic (~> 0.10.2)
+
+BUNDLED WITH
+   2.6.5
