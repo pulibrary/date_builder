@@ -20,12 +20,23 @@ require 'chronic'
                               label_id|
 
     def around_save
-      # if there are no normalized values, do something
+      #if there is neither begin nor end date but there is a date expression
       if (!self.begin && !self.end) && self.expression
-        if self.expression =~ /\d{4}/
+        let parsed_date = Chronic.parse(self.expression)
+        #proceed only if Chronic can parse the date
+        unless parsed_date == nil
+          #if the date is parsable as a range, get begin and end
+          if parsed_date.class == "Span"
+            self.begin = parsed_date.begin
+            self.end = parsed_date.end
+          #otherwise treat as a single date
+          else
             self.begin = self.expression
-        else self.begin = '1973'
+          end
         end
+      end
+
+
       #   # parse date
       #   parsed_dates = Timetwister.parse(self.expression)
 
