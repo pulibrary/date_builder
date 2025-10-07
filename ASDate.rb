@@ -1,5 +1,3 @@
-require 'chronic'
-
 # Rails.application.config.after_initialize do
 
   class ASDate < Sequel::Model(:date)
@@ -20,21 +18,7 @@ require 'chronic'
                               label_id|
 
     def around_save
-      #if there is neither begin nor end date but there is a date expression
-      if (!self.begin && !self.end) && self.expression
-        let parsed_date = Chronic.parse(self.expression)
-        #proceed only if Chronic can parse the date
-        unless parsed_date == nil
-          #if the date is parsable as a range, get begin and end
-          if parsed_date.class == "Span"
-            self.begin = parsed_date.begin
-            self.end = parsed_date.end
-          #otherwise treat as a single date
-          else
-            self.begin = self.expression
-          end
-        end
-      end
+      AddMachineReadableDates.new(self).call
 
 
       #   # parse date
@@ -54,9 +38,6 @@ require 'chronic'
       #     populate(date, ttdate, dtype)
       #     date.save
       #   end
-      else
-        super
-      end
     end
   end
 # end
