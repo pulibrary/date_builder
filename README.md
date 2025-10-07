@@ -1,3 +1,5 @@
+## This plugin is in development and has limited functionality
+
 ### To test the plugin on a local ASpace instance:
 
 1. Put the class in `plugins/backend/model`
