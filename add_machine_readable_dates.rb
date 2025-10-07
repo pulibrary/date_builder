@@ -6,18 +6,15 @@ class AddMachineReadableDates
     end
   
     def call
-      #if there is neither begin nor end date but there is a date expression
-      if (!date_record.begin && !date_record.end) && date_record.expression
-        parsed_date = Chronic.parse(date_record.expression)
-        #proceed only if Chronic can parse the date
-        unless parsed_date == nil
-          #if the date is parsable as a range, get begin and end
-          if parsed_date.class == "Span"
-            date_record.begin = parsed_date.begin
-            date_record.end = parsed_date.end
-          #otherwise treat as a single date
+      if (date_record.begin || date_record.end) && !date_record.expression
+        begin_date_valid = Chronic.parse(date_record.begin)
+        end_date_valid = Chronic.parse(date_record.end)
+        #proceed only if Chronic can parse one of the dates
+        if begin_date_valid || end_date_valid
+          if begin_date_valid && end_date_valid
+            date_record.expression = "#{date_record.begin}-#{date_record.end}"
           else
-            date_record.begin = date_record.expression
+            date_record.expression = date_record.begin || date_record.end
           end
         end
       end
