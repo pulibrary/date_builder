@@ -1,14 +1,11 @@
-# Rails.application.config.after_initialize do
+class ASDate < Sequel::Model(:date)
+  include ASModel
+  corresponds_to JSONModel(:date)
 
-  class ASDate < Sequel::Model(:date)
-    include ASModel
-    corresponds_to JSONModel(:date)
+  set_model_scope :global
 
-    set_model_scope :global
-
-    def around_save
-      AddMachineReadableDates.new(self).call
-      super
-    end
+  def around_save
+    AddExpression.call(self)
+    super
   end
-# end
+end
