@@ -1,11 +1,7 @@
 require 'chronic'
 
-class AddMachineReadableDates
-    def initialize(date_record)
-      @date_record = date_record
-    end
-  
-    def call
+module AddExpression
+    def self.call(date_record)
       if (date_record.begin || date_record.end) && !date_record.expression
         begin_date_valid = Chronic.parse(date_record.begin)
         end_date_valid = Chronic.parse(date_record.end)
@@ -19,8 +15,4 @@ class AddMachineReadableDates
         end
       end
     end
-  
-    private
-  
-    attr_reader :date_record
   end
