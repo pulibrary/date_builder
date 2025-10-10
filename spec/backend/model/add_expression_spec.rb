@@ -8,7 +8,7 @@ RSpec.describe AddExpression do
     AddExpression.call(date)
     expect(date.begin).to be_nil
     expect(date.end).to be_nil
-    expect(date.expression).to be_nil
+    expect(date.expression).to eq "!bad bad"
   end
   it 'does not change the record if there is a mis-match date' do
     # TODO: we will want some warning or logging to the user so they can address the problem
