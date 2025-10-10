@@ -53,4 +53,32 @@ RSpec.describe AddExpression do
 
   # TODO: add tests for months, single days, year-to-month ranges, day-to-year, etc.
 
+  describe 'valid_date?' do
+    %w[
+      2025-01-01
+      2025-01
+      2025
+      1996
+      1944
+      1990-11-12
+    ].each do |date|
+      it 'recognizes #{date} as valid' do
+        expect(AddExpression.valid_date?(date)).to be true
+      end
+    end
+
+    %w[
+      202020-01
+      2025-02-29
+      2020-1
+      2025-012
+      02025-012-012
+      0
+      2020-01-01-01
+    ].each do |date|
+      it "recognizes #{date} as invalid" do
+        expect(AddExpression.valid_date?(date)).to be false
+      end
+    end
+  end
 end
