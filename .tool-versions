@@ -1,0 +1,2 @@
+# This should match the jruby-jars version in https://github.com/archivesspace/archivesspace/blob/master/backend/Gemfile
+ruby jruby-9.4.8.0

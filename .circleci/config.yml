@@ -1,0 +1,10 @@
+jobs:
+  build:
+    docker:
+      # This should match the jruby-jars version in https://github.com/archivesspace/archivesspace/blob/master/backend/Gemfile
+      - image: jruby:9.4.8.0
+    resource_class: small
+    steps:
+      - checkout
+      - run: bundle install
+      - run: bundle exec rspec
