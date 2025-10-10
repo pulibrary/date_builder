@@ -5,10 +5,12 @@ module AddExpression
       if (date_record.begin || date_record.end) && !date_record.expression
         begin_date_valid = valid_date?(date_record.begin)
         end_date_valid = valid_date?(date_record.end)
-        #proceed only if Chronic can parse one of the dates
+
         if begin_date_valid || end_date_valid
           if begin_date_valid && end_date_valid
             date_record.expression = "#{date_record.begin}-#{date_record.end}"
+          elsif begin_date_valid && (%w[inclusive bulk].include? date_record.date_type)
+            date_record.expression = "#{date_record.begin}-"
           else
             date_record.expression = date_record.begin || date_record.end
           end
