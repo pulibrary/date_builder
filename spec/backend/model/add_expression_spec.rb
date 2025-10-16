@@ -31,7 +31,7 @@ RSpec.describe AddExpression do
     AddExpression.call(date)
     expect(date.begin).to eq '1999-03-05'
     expect(date.end).to be_nil
-    expect(date.expression).to eq '1999-03-05'
+    expect(date.expression).to eq '1999 March 05'
   end
 
   it 'creates an expression if there is an end date but no begin date' do
@@ -63,7 +63,7 @@ RSpec.describe AddExpression do
     AddExpression.call(date)
     expect(date.begin).to eq '1999-03'
     expect(date.end).to eq '2005-04'
-    expect(date.expression).to eq '1999-03-2005-04'
+    expect(date.expression).to eq '1999 March-2005 April'
   end
 
   it 'creates an expression if there is both a begin date and an end date' do
@@ -71,7 +71,7 @@ RSpec.describe AddExpression do
     AddExpression.call(date)
     expect(date.begin).to eq '1999-03-05'
     expect(date.end).to eq '2005-04-10'
-    expect(date.expression).to eq '1999-03-05-2005-04-10'
+    expect(date.expression).to eq '1999 March 05-2005 April 10'
   end
 
   it 'creates an expression from a month if there is a begin date but no end date' do
@@ -79,7 +79,7 @@ RSpec.describe AddExpression do
     AddExpression.call(date)
     expect(date.begin).to eq '1999-05'
     expect(date.end).to be_nil
-    expect(date.expression).to eq '1999-05'
+    expect(date.expression).to eq '1999 May'
   end
 
   it 'recognizes an inclusive open year range' do
