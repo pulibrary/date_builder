@@ -21,19 +21,22 @@ module AddExpression
 
     def self.call(date_record)
       if (date_record.begin || date_record.end) && !date_record.expression
-        begin_date_valid = valid_date?(date_record.begin)
-        end_date_valid = valid_date?(date_record.end)
+        date_record.expression = self.expression(date_record.begin, date_record.end, date_record.date_type)
+      end
+    end
 
+    def self.expression(begin_date, end_date, date_type)
+      begin_date_valid = valid_date?(begin_date)
+      end_date_valid = valid_date?(end_date)
         if begin_date_valid || end_date_valid
           if begin_date_valid && end_date_valid
-            date_record.expression = "#{normalize_date(date_record.begin)}-#{normalize_date(date_record.end)}"
-          elsif begin_date_valid && (%w[inclusive bulk].include? date_record.date_type)
-            date_record.expression = "#{normalize_date(date_record.begin)}-"
+            "#{normalize_date(begin_date)}-#{normalize_date(end_date)}"
+          elsif begin_date_valid && (%w[inclusive bulk].include? date_type)
+            "#{normalize_date(begin_date)}-"
           else
-            date_record.expression = normalize_date(date_record.begin) || normalize_date(date_record.end)
+            normalize_date(begin_date) || normalize_date(end_date)
           end
         end
-      end
     end
 
     def self.valid_date?(date_string)
