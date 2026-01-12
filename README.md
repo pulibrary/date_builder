@@ -1,4 +1,11 @@
-## This plugin is in development and has limited functionality
+### How to enter dates using this plugin
+
+This plugin populates the date expression from the begin and end date on save. If the date expression field is already populated, the plugin has no effect.
+
+1. In the Dates subrecord, enter begin and/or end dates.
+2. Save the record.
+
+The date expression field as well as the date expression portion of the record title will update on save.
 
 ### To test the plugin on a local 4.x ASpace instance:
 
