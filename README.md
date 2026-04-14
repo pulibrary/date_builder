@@ -1,5 +1,7 @@
 ### How to enter dates using this plugin
 
+TESTING CI!!!!
+
 This plugin populates the date expression from the begin and end date on save. If the date expression field is already populated, the plugin has no effect.
 
 1. In the Dates subrecord, enter begin and/or end dates.
